@@ -102,7 +102,7 @@ void* buffer;
 while(1){
 
    scanf("Mesaj göndermek için 1'e bas sonra mesajı gönder: %s", mesaj);
-   if(mesaj == "1"){
+   if(strcmp(mesaj,"1") == 0){
       scanf("Yaz: %s", mesaj);
       giden_bytelar = send(new_socket, mesaj, giden_uzunluk, 0);
    }
