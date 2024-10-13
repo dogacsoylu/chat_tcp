@@ -51,7 +51,7 @@ int soketfd;
 
 if((soketfd = socket(AF_INET, SOCK_STREAM, 0)) == -1){
 
-   fprintf(stderr, "socket error");
+   fprintf(stderr, "socket error \n");
    exit(1);
 }
 
@@ -61,7 +61,7 @@ int baglan = 0;
 
 if( (baglan = connect(soketfd, res->ai_addr, res->ai_addrlen)) == -1){
 
-   fprintf(stderr, "connect error");
+   fprintf(stderr, "connect error \n");
    exit(1);
 
 }
@@ -72,26 +72,31 @@ if( (baglan = connect(soketfd, res->ai_addr, res->ai_addrlen)) == -1){
 
 int gelen;
 int giden_bytelar;
-char *mesaj;
+char mesaj[900];
 int giden_uzunluk;
 int uzunluk = 1000;
-void* buffer;
+char buffer[1000];
 
 while(1){
 
-   scanf("Mesaj göndermek için 1'e bas sonra mesajı gönder: %s", mesaj);
+   scanf("Mesaj göndermek için 1'e bas sonra mesajı gönder: %s \n", mesaj);
    if(strcmp(mesaj,"1") == 0){
-      scanf("Yaz: %s", mesaj);
+      scanf("%s", mesaj);
+      giden_uzunluk = strlen(mesaj);
       giden_bytelar = send(soketfd, mesaj, giden_uzunluk, 0);
+      printf("Giden byte boyutu: %d", giden_bytelar);
    }
 
-   if((gelen = recv(soketfd, buffer, uzunluk,0) == -1)){
+   gelen = recv(soketfd, buffer, uzunluk,0);
+   if(gelen == -1){
       fprintf(stderr,"Receive error");
       break;
    }
 
-   printf("Gelen mesaj: %s", (char*)buffer);
+   printf("Gelen mesaj: %s",buffer);
 }
+
+ freeaddrinfo(res);
 
  return 0;
  }

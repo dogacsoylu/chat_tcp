@@ -51,7 +51,7 @@ int soketfd;
 
 if((soketfd = socket(AF_INET, SOCK_STREAM, 0)) == -1){
 
-   fprintf(stderr, "socket error");
+   fprintf(stderr, "socket error\n");
    exit(1);
 }
 
@@ -61,7 +61,7 @@ int baglan = 0;
 
 if( (baglan = bind(soketfd,res->ai_addr,res->ai_addrlen)) == -1){
 
-   fprintf(stderr, "bind error");
+   fprintf(stderr, "bind error\n");
    exit(1);
 
 }
@@ -70,7 +70,7 @@ if( (baglan = bind(soketfd,res->ai_addr,res->ai_addrlen)) == -1){
 int dinle;
 if( (dinle = listen(soketfd, BACKLOG)) == -1){
 
-   fprintf(stderr, "listen error");
+   fprintf(stderr, "listen error\n");
    exit(1);
 
 }
@@ -84,7 +84,7 @@ socklen_t addr_size = sizeof(struct sockaddr_in);
 
 if( (new_socket = accept(soketfd, new_addr, addr_size)) == -1){
 
-   fprintf(stderr, "accept error");
+   fprintf(stderr, "accept error \n");
    exit(1);
 
 }
@@ -107,15 +107,16 @@ while(1){
       scanf("%s", mesaj);
       giden_uzunluk = strlen(mesaj);
       giden_bytelar = send(new_socket, mesaj, giden_uzunluk, 0);
+      printf("Giden byte boyutu: %d \n", giden_bytelar);
    }
 
    gelen = recv(new_socket, buffer, uzunluk,0);
    if(gelen == 0){
-      printf("Session has been closed by the client.");
+      printf("Session has been closed by the client. \n");
       break;
    }
 
-   printf("Gelen mesaj: %s", (char*)buffer);
+   printf("Gelen mesaj: %s \n", buffer);
 }
 
 freeaddrinfo(res);
