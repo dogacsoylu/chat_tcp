@@ -118,6 +118,7 @@ while(1){
    }
 
    printf("Gelen mesaj: %s \n", buffer);
+   memset(buffer, 0, sizeof(buffer));
 }
 
 freeaddrinfo(res);

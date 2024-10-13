@@ -95,6 +95,7 @@ while(1){
    }
 
    printf("Gelen mesaj: %s",buffer);
+   memset(buffer, 0, sizeof(buffer));
 }
 
  freeaddrinfo(res);
