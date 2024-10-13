@@ -1,13 +1,13 @@
 #include <stdio.h>
- #include <string.h>
+#include <string.h>
 #include <stdlib.h>
- #include <sys/types.h>
- #include <sys/socket.h>
- #include <netdb.h>
- #include <arpa/inet.h>
- #include <netinet/in.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netdb.h>
+#include <arpa/inet.h>
+#include <netinet/in.h>
 
- #define MYPORT "3490"
+ #define MYPORT "3491"
  #define BACKLOG 10
 
  int main()
