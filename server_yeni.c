@@ -78,11 +78,11 @@ if( (dinle = listen(soketfd, BACKLOG)) == -1){
 //accept() ile gelen istekleri kabul edip her biri için yeni soket oluşturma
 
 int new_socket;
-struct sockaddr *new_addr = NULL;
+struct sockaddr_storage *new_addr;
 socklen_t addr_size = sizeof(struct sockaddr_in);
 
 
-if( (new_socket = accept(soketfd, new_addr, addr_size)) == -1){
+if( (new_socket = accept(soketfd, (struct sockaddr*)&new_addr, &addr_size)) == -1){
 
    fprintf(stderr, "accept error \n");
    exit(1);
