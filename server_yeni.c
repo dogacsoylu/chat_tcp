@@ -7,24 +7,25 @@
 #include <arpa/inet.h>
 #include <netinet/in.h>
 
- #define MYPORT "3491"
+ #define MYPORT "3490"
  #define BACKLOG 10
 
  int main()
  {
  
-    struct addrinfo hints, *res, *p;
+    struct addrinfo *res, *p;
+    struct addrinfo hints;
     struct sockaddr_in *ipv4; 
     void* addr;
     int status;
     char ipstr[INET_ADDRSTRLEN];
 
-   memset(&hints, 0, sizeof hints);
+   memset(&hints, 0, sizeof(hints));
    hints.ai_family = AF_UNSPEC;
    hints.ai_socktype = SOCK_STREAM;
    hints.ai_flags = AI_PASSIVE;
 
-//getaddrinfo() ile struct'ın adres bilgilerini doldurma
+   //getaddrinfo() ile struct'ın adres bilgilerini doldurma
 
     if( (status = getaddrinfo(NULL, MYPORT, &hints, &res)) != 0){
 
@@ -78,8 +79,7 @@ if( (dinle = listen(soketfd, BACKLOG)) == -1){
 
 int new_socket;
 struct sockaddr *new_addr = NULL;
-socklen_t *addr_size;
-addr_size = sizeof(new_addr);
+socklen_t addr_size = sizeof(struct sockaddr_in);
 
 
 if( (new_socket = accept(soketfd, new_addr, addr_size)) == -1){
@@ -94,20 +94,23 @@ if( (new_socket = accept(soketfd, new_addr, addr_size)) == -1){
 
 int gelen;
 int giden_bytelar;
-char *mesaj;
+char mesaj[900];
 int giden_uzunluk;
 int uzunluk = 1000;
-void* buffer;
+char buffer[1000];
 
 while(1){
 
    scanf("Mesaj göndermek için 1'e bas sonra mesajı gönder: %s", mesaj);
-   if(strcmp(mesaj,"1") == 0){
-      scanf("Yaz: %s", mesaj);
+   if(strcmp(mesaj,"1") == 0){ 
+      printf("Lütfen bir mesaj girin: ");
+      scanf("%s", mesaj);
+      giden_uzunluk = strlen(mesaj);
       giden_bytelar = send(new_socket, mesaj, giden_uzunluk, 0);
    }
 
-   if((gelen = recv(new_socket, buffer, uzunluk,0) == 0)){
+   gelen = recv(new_socket, buffer, uzunluk,0);
+   if(gelen == 0){
       printf("Session has been closed by the client.");
       break;
    }
@@ -115,5 +118,6 @@ while(1){
    printf("Gelen mesaj: %s", (char*)buffer);
 }
 
+freeaddrinfo(res);
  return 0;
  }

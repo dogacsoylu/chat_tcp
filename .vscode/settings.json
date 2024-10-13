@@ -1,0 +1,6 @@
+{
+    "C_Cpp_Runner.cppStandard": "gnu++17",
+    "C_Cpp_Runner.cStandard": "gnu17",
+    "C_Cpp.default.cppStandard": "gnu++17",
+    "C_Cpp.default.cStandard": "gnu17"
+}
