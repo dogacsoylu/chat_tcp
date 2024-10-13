@@ -79,7 +79,8 @@ char buffer[1000];
 
 while(1){
 
-   scanf("Mesaj göndermek için 1'e bas sonra mesajı gönder: %s \n", mesaj);
+   printf("Mesaj göndermek için '1' e bas. \n");
+   scanf("%s", mesaj);
    if(strcmp(mesaj,"1") == 0){
       scanf("%s", mesaj);
       giden_uzunluk = strlen(mesaj);
